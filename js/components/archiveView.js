@@ -29,6 +29,12 @@ export class ArchiveView {
     this.update();
   }
 
+  // Resolve {AGENT_01} sentinel to the current player name
+  resolvePlayer(text) {
+    const name = gameState.getState().playerName || 'AGENT 01';
+    return text.replace(/\{AGENT_01\}/g, name.toUpperCase());
+  }
+
   update() {
     if (!this.container) return;
     const state = gameState.getState();
@@ -123,7 +129,7 @@ export class ArchiveView {
                 </div>
               </div>
 
-              <div class="archive-record-body">${activeEntry.content}</div>
+              <div class="archive-record-body">${this.resolvePlayer(activeEntry.content)}</div>
 
               <!-- Relational Investigation Cross-Links -->
               ${relatedLinks.length > 0 ? `
@@ -145,7 +151,7 @@ export class ArchiveView {
                 </div>
               ` : ''}
 
-              <div class="archive-record-footnote">${activeEntry.footnote}</div>
+              <div class="archive-record-footnote">${this.resolvePlayer(activeEntry.footnote)}</div>
             ` : `
               <div class="archive-detail-empty">
                 <div style="font-size: 32px; color: var(--text-dim); margin-bottom: 12px;">🔒</div>

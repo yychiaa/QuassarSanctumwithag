@@ -16,6 +16,7 @@ import { AgentSyncModal } from './components/agentSyncModal.js';
 import { EvidenceMatrixModal } from './components/evidenceMatrix.js';
 import { NavigationDrawer } from './components/navigationDrawer.js';
 import { EndingScreen } from './components/endingScreen.js';
+import { FieldTerminal } from './components/fieldTerminal.js';
 
 export class QuassarSanctumApp {
   constructor() {
@@ -71,7 +72,7 @@ export class QuassarSanctumApp {
 
           <div class="hud-location-tag">
             <span class="hud-label">LEAD INVESTIGATOR</span>
-            <span class="hud-value" id="hud-agent-val" style="color: var(--green-glow);">AGENT 01 // K. VANCE</span>
+            <span class="hud-value" id="hud-agent-val" style="color: var(--green-glow);">AGENT 01</span>
           </div>
         </div>
 
@@ -113,6 +114,11 @@ export class QuassarSanctumApp {
 
           <button class="hud-btn" id="btn-hud-audio" title="Toggle Sound Synth">
             <span id="hud-audio-icon">🔊</span>
+          </button>
+
+          <button class="hud-btn" id="btn-hud-terminal" title="Open Field Terminal">
+            <span>⎙</span>
+            <span>TERMINAL</span>
           </button>
         </div>
       </header>
@@ -176,6 +182,13 @@ export class QuassarSanctumApp {
       soundEngine.playClick();
       this.openMainMenu();
     });
+
+    // Terminal button — opens field terminal during investigation
+    document.getElementById('btn-hud-terminal').addEventListener('click', () => {
+      if (gameState.getState().gamePhase === 'investigation') {
+        this.openFieldTerminal(false);
+      }
+    });
   }
 
   startBoot() {
@@ -195,9 +208,38 @@ export class QuassarSanctumApp {
 
   openAgentSetup() {
     const setup = new AgentSetup(() => {
-      this.startInvestigation();
+      this.openFieldTerminal(true); // first boot = true
     });
     setup.render(this.rootEl);
+  }
+
+  openFieldTerminal(isFirstBoot = false) {
+    if (this.activeModal) this.activeModal.close();
+    const terminal = new FieldTerminal(
+      isFirstBoot,
+      (pendingAction) => {
+        this.activeModal = null;
+        // On first boot, always start the investigation scene first
+        if (isFirstBoot) {
+          this.startInvestigation();
+        }
+        // Then route any system action the player selected inside the terminal
+        if (pendingAction === 'map') {
+          this.openNavigationDrawer();
+        } else if (pendingAction === 'archive') {
+          this.openArchive();
+        } else if (pendingAction === 'evidence') {
+          this.openEvidenceMatrix();
+        } else if (pendingAction === 'sync') {
+          this.openAgentSync();
+        }
+        // No pending action: terminal just closes, investigation continues
+      }
+    );
+    terminal.render(this.rootEl);
+    if (!isFirstBoot) {
+      this.activeModal = terminal;
+    }
   }
 
   startInvestigation() {
@@ -256,9 +298,9 @@ export class QuassarSanctumApp {
     } else if (action === 'analyze_spectrum') {
       this.showRadioToast('KAYLANI [AGENT 03]', 'Raman resonance matches the planthopper bio-matrix. Dr. Corri\'s sacrifice was intentional.');
     } else if (action === 'unlock_sublevel_gate') {
-      this.showRadioToast('ADITYA [AGENT 02]', 'Sublevel gates unlatched. Vance, watch your footing—the basalt is fractured down there.');
+      this.showRadioToast('ADITYA [AGENT 02]', `Sublevel gates unlatched. ${gameState.getState().playerName.toUpperCase()}, watch your footing—the basalt is fractured down there.`);
     } else if (action === 'recover_corri_seal') {
-      this.showRadioToast('KAYLANI [AGENT 03]', 'Dr. Corri\'s seal authenticated. Vance, enact the final operational resolution.');
+      this.showRadioToast('KAYLANI [AGENT 03]', `Dr. Corri's seal authenticated. ${gameState.getState().playerName.toUpperCase()}, enact the final operational resolution.`);
     }
   }
 

@@ -81,7 +81,7 @@ The fracture occurred at 04:12:09 UTC on 17 October 3012. Microscopic glass ioni
 - 16 May 3012 — Acoustic Resonance Chamber (ARC) activated in subterranean basalt void.
 - June–Sept 3012 — Halionite (HAL) synthesis and Project KHYRA biological engineering trials.
 - 17 October 3012 — Major containment failure of KHYRA. Dr. Corri manually seals Level -01 but dies of KHYRA venom. Facility enters permanent quarantine.
-- Post-Incident 3012 — Field Unit (Agents Vance, Aditya, Kaylani) deploys to conduct forensic investigation.`,
+- Post-Incident 3012 — Field Unit (Agents {AGENT_01}, Aditya, Kaylani) deploys to conduct forensic investigation.`,
     footnote: 'Compiled by Agent 01 Reconstruction Matrix.'
   },
 
@@ -92,7 +92,7 @@ The fracture occurred at 04:12:09 UTC on 17 October 3012. Microscopic glass ioni
     title: 'INVESTIGATION UNIT ROSTER (3012)',
     refCode: 'ARCH-PER-001',
     content: `BUREAU FIELD INVESTIGATION UNIT:
-- AGENT 01: [PLAYER NAME] — Lead Forensic Investigator.
+- AGENT 01: {AGENT_01} — Lead Forensic Investigator.
 - AGENT 02: ADITYA — Systems Architecture & Physical Forensics.
 - AGENT 03: KAYLANI — Xenobiology & Spectrographic Diagnostics.
 

@@ -7,7 +7,7 @@ export const AGENT_TEAM = [
   {
     id: 'agent_01',
     code: 'AGENT 01',
-    name: 'K. VANCE', // dynamic from state
+    name: '{AGENT_01}', // resolved from gameState at render time
     role: 'Lead Forensic Investigator',
     status: 'ACTIVE // IN SITE',
     avatarColor: 'var(--green-glow)'
@@ -38,7 +38,7 @@ export const AGENT_COMMS = [
     senderClass: 'aditya',
     timestamp: '3012.10.28 — 03:45:10 UTC',
     subject: 'Sub-Sea Conduit Acoustic Rupture Analysis',
-    body: `Vance, I examined the severed sub-sea fiber umbilical at the eastern seawall. The fracture matches the 17 October 3012 timestamp. The glass fibers were shattered from an ultra-fast internal acoustic standing wave.
+    body: `{AGENT_01}, I examined the severed sub-sea fiber umbilical at the eastern seawall. The fracture matches the 17 October 3012 timestamp. The glass fibers were shattered from an ultra-fast internal acoustic standing wave.
 
 The resonance matches the subterranean ARC matrix activated on 16 May 3012. Dr. Corri's power shunt on Oct 17 saved the surface grid, but whatever is sealed in Sublevel -1 is still vibrating. Watch the telemetry as you enter the Hub.`,
     archiveRef: 'AGD-01'
@@ -62,7 +62,7 @@ Raman spectroscopy matches planthopper (Issidae) morphology cross-linked with AC
     senderClass: 'letter',
     timestamp: 'PRIOR TO DISPATCH // 3012.10.28 — 02:15:00 UTC',
     subject: 'DIRECTIVE #3012-QS: Dr. Corri Containment Verification',
-    body: `Vance,
+    body: `{AGENT_01},
 
 This directive is for your terminal eyes only. Do not sync this memo to Agent Aditya or Agent Kaylani.
 

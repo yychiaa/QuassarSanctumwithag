@@ -600,7 +600,7 @@ export const LOCATIONS = {
         isAnomaly: true,
         macroImage: 'assets/images/experiment_chamber.jpg',
         telemetry: {
-          'AUTHORIZED INVESTIGATOR': 'AGENT 01 // K. VANCE',
+          'AUTHORIZED INVESTIGATOR': 'AGENT 01 // {AGENT_01}',
           'ROUTE X': 'PROTOCOL ALPHA (Total Oceanic Quarantine & Purge)',
           'ROUTE Y': 'PROTOCOL OMEGA (Scientific Extraction & Memorial Archive)',
           'RESOLUTION STATE': 'Awaiting Agent 01 Protocol Choice'

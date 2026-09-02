@@ -20,6 +20,9 @@ export class InspectionModal {
     this.container = document.createElement('div');
     this.container.className = 'inspection-modal-backdrop';
 
+    const playerName = gameState.getState().playerName || 'AGENT 01';
+    const resolvePlayer = (text) => text.replace(/\{AGENT_01\}/g, playerName.toUpperCase());
+
     const state = gameState.getState();
     const isFirstTime = gameState.inspectPoi(this.poi.id);
     if (this.poi.evidenceId) {
@@ -59,7 +62,7 @@ export class InspectionModal {
               ${telemetryKeys.map(k => `
                 <div class="telemetry-row">
                   <span class="telemetry-label">${k}</span>
-                  <span class="telemetry-val">${this.poi.telemetry[k]}</span>
+                  <span class="telemetry-val">${resolvePlayer(String(this.poi.telemetry[k]))}</span>
                 </div>
               `).join('')}
             </div>

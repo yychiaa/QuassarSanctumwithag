@@ -22,6 +22,12 @@ export class EvidenceMatrixModal {
     this.update();
   }
 
+  // Resolve {AGENT_01} sentinel to the current player name
+  resolvePlayer(text) {
+    const name = gameState.getState().playerName || 'AGENT 01';
+    return text.replace(/\{AGENT_01\}/g, name.toUpperCase());
+  }
+
   update() {
     if (!this.container) return;
     const state = gameState.getState();
@@ -83,12 +89,12 @@ export class EvidenceMatrixModal {
 
               <div style="font-size: 13px; line-height: 1.8; color: var(--text-main); margin-bottom: 24px;">
                 <div style="font-size: 10px; font-weight: 700; color: var(--cyan-primary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">SPECIMEN ABSTRACT:</div>
-                <p>${activeEvd.summary}</p>
+                <p>${this.resolvePlayer(activeEvd.summary)}</p>
               </div>
 
               <div style="background: #06090f; border: 1px solid var(--green-border); border-left: 4px solid var(--green-glow); padding: 18px; font-size: 12px; line-height: 1.7; color: var(--text-muted);">
                 <div style="font-size: 10px; font-weight: 700; color: var(--green-glow); letter-spacing: 0.1em; margin-bottom: 6px;">FORENSIC INVESTIGATOR NOTES:</div>
-                ${activeEvd.forensicNotes}
+                ${this.resolvePlayer(activeEvd.forensicNotes)}
               </div>
             ` : `
               <div class="archive-detail-empty">

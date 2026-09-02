@@ -10,7 +10,7 @@ export const EVIDENCE_ITEMS = {
     category: 'PROTOCOL',
     locationFound: 'INVESTIGATOR CONSOLE (PRE-DROP)',
     discovered: true,
-    summary: 'Forensic mandate authorizing Agent 01 (Vance), Agent 02 (Aditya), and Agent 03 (Kaylani) to investigate the sudden telemetry blackout of Quassar Observatory following the 17 October 3012 containment event.',
+    summary: 'Forensic mandate authorizing Agent 01 ({AGENT_01}), Agent 02 (Aditya), and Agent 03 (Kaylani) to investigate the sudden telemetry blackout of Quassar Observatory following the 17 October 3012 containment event.',
     forensicNotes: 'Objective: Reconstruct facility state, verify Dr. Corri\'s containment measures, and determine whether Specimen ACF-01 and Project KHYRA remain contained.'
   },
   'EVD-001': {

@@ -406,3 +406,204 @@
   color: var(--green-glow);
   margin-top: 4px;
 }
+
+/* ─── FIELD TERMINAL COMPONENT ──────────────────────────────────────── */
+
+/* CRT phosphor scanline overlay */
+.ft-scanlines {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Override boot-container background for field terminal */
+.field-terminal-backdrop {
+  background: #020406;
+  z-index: 4500;
+}
+
+/* Larger terminal box for systems phase */
+.ft-terminal-box {
+  position: relative;
+  z-index: 10;
+}
+
+.ft-systems-box {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.ft-header {
+  font-size: 11px;
+}
+
+.ft-log {
+  font-size: 11px;
+}
+
+/* ─── Identity Banner ─────────────────────────────────────────────── */
+.ft-identity-banner {
+  background: #040709;
+  border: 1px solid var(--green-border);
+  border-left: 4px solid var(--green-glow);
+  padding: 12px 16px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-mono);
+}
+
+.ft-id-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+
+.ft-id-label {
+  color: var(--text-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  min-width: 90px;
+}
+
+.ft-id-val {
+  color: var(--cyan-primary);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.ft-id-sep {
+  color: var(--border-subtle);
+  font-size: 11px;
+}
+
+/* ─── Systems Grid ────────────────────────────────────────────────── */
+.ft-systems-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.ft-system-entry {
+  background: #040709;
+  border: 1px solid var(--border-subtle);
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  transition: border-color 0.15s ease, background 0.15s ease;
+  position: relative;
+}
+
+.ft-system-entry.ft-clickable {
+  cursor: pointer;
+}
+
+.ft-system-entry.ft-clickable:hover {
+  background: var(--green-subtle);
+  border-color: var(--green-border);
+}
+
+.ft-system-entry.ft-clickable:hover .ft-sys-key {
+  color: var(--green-glow);
+}
+
+.ft-sys-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.ft-sys-icon {
+  font-size: 13px;
+  color: var(--text-dim);
+  width: 16px;
+  text-align: center;
+}
+
+.ft-sys-key {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex: 1;
+  transition: color 0.15s ease;
+}
+
+.ft-sys-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  letter-spacing: 0.08em;
+}
+
+.ft-status-success {
+  background: var(--green-subtle);
+  color: var(--green-glow);
+  border: 1px solid var(--green-border);
+}
+
+.ft-status-warn {
+  background: var(--amber-subtle);
+  color: var(--amber-glow);
+  border: 1px solid var(--amber-border);
+}
+
+.ft-sys-desc {
+  font-size: 10px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.ft-sys-hint {
+  font-size: 9px;
+  color: var(--green-dim);
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+.ft-system-entry.ft-clickable:hover .ft-sys-hint {
+  color: var(--green-glow);
+}
+
+/* ─── Field Briefing Box ──────────────────────────────────────────── */
+.ft-briefing-box {
+  background: #06090e;
+  border: 1px dashed var(--green-border);
+  padding: 12px 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 12px 0;
+  font-family: var(--font-mono);
+}
+
+/* ─── Responsive: collapse to 1 col on narrow screens ─────────────── */
+@media (max-width: 680px) {
+  .ft-systems-grid {
+    grid-template-columns: 1fr;
+  }
+  .ft-id-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .ft-id-sep { display: none; }
+}
+

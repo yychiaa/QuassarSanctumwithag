@@ -35,7 +35,7 @@ export class AgentSetup {
             </div>
             <div style="margin-top: 6px;">
               <label style="font-size: 9px; color: var(--text-dim); text-transform: uppercase; display: block; margin-bottom: 4px;">AGENT 01 CALLSIGN / NAME:</label>
-              <input type="text" id="agent-name-input" value="${gameState.getState().playerName}" maxlength="24" placeholder="Enter Agent Name..." />
+              <input type="text" id="agent-name-input" value="" maxlength="24" placeholder="Enter your callsign / name…" autocomplete="off" spellcheck="false" />
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export class AgentSetup {
     input.select();
 
     const submit = () => {
-      const name = input.value.trim() || 'K. VANCE';
+      const name = input.value.trim() || 'AGENT 01';
       gameState.setPlayerName(name);
       soundEngine.playDiscovery();
       this.close();

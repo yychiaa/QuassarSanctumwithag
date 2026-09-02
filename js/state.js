@@ -11,7 +11,7 @@ export class GameStateManager {
   getInitialState() {
     return {
       // Player & Session
-      playerName: 'K. VANCE',
+      playerName: 'AGENT 01',
       gamePhase: 'boot', // 'boot' | 'menu' | 'setup' | 'investigation'
       
       // Navigation & World
@@ -70,7 +70,7 @@ export class GameStateManager {
   }
 
   setPlayerName(name) {
-    this.state.playerName = name.trim() || 'K. VANCE';
+    this.state.playerName = (name && name.trim()) ? name.trim().substring(0, 24) : 'AGENT 01';
     this.notify('playerName', this.state.playerName);
   }
 

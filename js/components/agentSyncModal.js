@@ -25,6 +25,8 @@ export class AgentSyncModal {
   update() {
     if (!this.container) return;
     const state = gameState.getState();
+    const playerName = state.playerName || 'AGENT 01';
+    const resolvePlayer = (text) => text.replace(/\{AGENT_01\}/g, playerName.toUpperCase());
 
     // Mark all currently shown comms as read
     AGENT_COMMS.forEach(c => gameState.markCommAsRead(c.id));
@@ -98,7 +100,7 @@ export class AgentSyncModal {
                   <span>${comm.timestamp}</span>
                 </div>
                 <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px;">${comm.subject}</div>
-                <div class="sync-msg-body">${comm.body.replace(/\n/g, '<br/>')}</div>
+                <div class="sync-msg-body">${resolvePlayer(comm.body).replace(/\n/g, '<br/>')}</div>
                 
                 ${comm.archiveRef ? `
                   <div class="sync-msg-attachment">
