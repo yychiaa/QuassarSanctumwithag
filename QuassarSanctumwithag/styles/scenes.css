@@ -1,0 +1,343 @@
+/* QUASSAR SANCTUM - Interactive Scene Viewport, Atmospheric Layers & Transit */
+
+.viewport-main {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #020406;
+  display: flex;
+}
+
+.scene-canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Scene Image with subtle breathing / ambient pan */
+.scene-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.6s ease, filter 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.85) contrast(1.15) saturate(0.85);
+  pointer-events: none;
+}
+
+/* Dynamic Environmental Particle Canvas Layer */
+.scene-particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 45;
+}
+
+.scene-overlay-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 35%, rgba(4,6,8,0.85) 100%);
+  pointer-events: none;
+  z-index: 40;
+}
+
+/* Location Header Overlay inside Viewport */
+.scene-location-title-card {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  background: rgba(8, 12, 18, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--green-glow);
+  padding: 14px 20px;
+  z-index: 50;
+  pointer-events: none;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.scene-loc-code {
+  font-size: 10px;
+  color: var(--green-glow);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.scene-loc-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.scene-loc-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  max-width: 440px;
+}
+
+/* POI / Hotspot Reticles */
+.poi-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.poi-hotspot:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.poi-reticle {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(0, 255, 157, 0.6);
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 12, 18, 0.5);
+  backdrop-filter: blur(4px);
+  transition: all var(--transition-fast);
+}
+
+.poi-reticle::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--green-glow);
+  box-shadow: 0 0 8px var(--green-glow);
+  transition: transform 0.2s ease;
+}
+
+.poi-reticle::after {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 1px dashed rgba(0, 255, 157, 0.35);
+  border-radius: 50%;
+  animation: rotate-slow 12s linear infinite;
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.poi-hotspot:hover .poi-reticle {
+  border-color: var(--green-glow);
+  background: rgba(0, 255, 157, 0.18);
+  box-shadow: 0 0 22px rgba(0, 255, 157, 0.5);
+}
+
+.poi-hotspot:hover .poi-reticle::before {
+  transform: scale(1.5);
+}
+
+/* Inspected POI state */
+.poi-hotspot.inspected .poi-reticle {
+  border-color: var(--cyan-border);
+}
+
+.poi-hotspot.inspected .poi-reticle::before {
+  background: var(--cyan-primary);
+  box-shadow: 0 0 8px var(--cyan-primary);
+}
+
+.poi-hotspot.inspected .poi-reticle::after {
+  border-color: var(--cyan-border);
+}
+
+/* Anomaly / Warning POI */
+.poi-hotspot.anomaly .poi-reticle {
+  border-color: var(--amber-glow);
+}
+
+.poi-hotspot.anomaly .poi-reticle::before {
+  background: var(--amber-glow);
+  box-shadow: 0 0 10px var(--amber-glow);
+}
+
+/* Hover Tooltip Card */
+.poi-tooltip {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(8, 12, 18, 0.95);
+  border: 1px solid var(--green-border);
+  backdrop-filter: blur(12px);
+  padding: 10px 14px;
+  min-width: 230px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.75);
+  z-index: 70;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+
+.poi-hotspot:hover .poi-tooltip {
+  opacity: 1;
+  visibility: visible;
+  left: 54px;
+}
+
+.poi-tooltip-tag {
+  font-size: 9px;
+  color: var(--green-glow);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.poi-tooltip-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.poi-tooltip-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.poi-tooltip-action {
+  font-size: 9px;
+  color: var(--cyan-primary);
+  margin-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Navigation Drawer Floating Button */
+.nav-toggle-fab {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  z-index: 70;
+  background: rgba(8, 12, 18, 0.9);
+  border: 1px solid var(--cyan-border);
+  color: var(--cyan-primary);
+  padding: 12px 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+}
+
+.nav-toggle-fab:hover {
+  background: var(--cyan-subtle);
+  border-color: var(--cyan-primary);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+}
+
+/* Quick Navigation Mini Nodes on Viewport */
+.viewport-nav-strip {
+  position: absolute;
+  bottom: 24px;
+  left: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: calc(100% - 320px);
+  gap: 10px;
+  z-index: 70;
+}
+
+.quick-nav-btn {
+  background: rgba(8, 12, 18, 0.88);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 8px 14px;
+  backdrop-filter: blur(8px);
+}
+
+.quick-nav-btn:hover {
+  border-color: var(--green-border);
+  color: var(--green-glow);
+}
+
+.quick-nav-btn.locked {
+  border-color: var(--red-border);
+  color: var(--red-dim);
+  opacity: 0.7;
+}
+
+.quick-nav-btn.locked:hover {
+  background: var(--red-subtle);
+  color: var(--red-primary);
+  border-color: var(--red-primary);
+}
+
+/* Node Transit / Pressure Seal Cycling Overlay */
+.transit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #040608;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: transitFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes transitFade {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+.transit-box {
+  background: rgba(10, 15, 24, 0.95);
+  border: 1px solid var(--cyan-border);
+  padding: 24px 36px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.transit-header {
+  font-size: 10px;
+  color: var(--cyan-primary);
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
+.transit-target-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+
+.transit-status-line {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
