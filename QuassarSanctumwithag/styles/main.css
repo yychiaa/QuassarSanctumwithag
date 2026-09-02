@@ -1,0 +1,325 @@
+/* QUASSAR SANCTUM - Global Forensic Design System & Immersion Theme */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Color Palette - Phase 1: Forensic Precision */
+  --bg-primary: #040608;
+  --bg-surface: #090d14;
+  --bg-surface-elevated: #0f1522;
+  --bg-panel: rgba(9, 13, 20, 0.92);
+  --bg-panel-solid: #0d121b;
+  --bg-glass: rgba(15, 21, 34, 0.82);
+
+  /* Phosphor Green Accents */
+  --green-glow: #00ff9d;
+  --green-primary: #10b981;
+  --green-dim: #059669;
+  --green-subtle: rgba(16, 185, 129, 0.12);
+  --green-border: rgba(16, 185, 129, 0.4);
+
+  /* Forensic Cyans & Technical Slates */
+  --cyan-primary: #38bdf8;
+  --cyan-dim: #0284c7;
+  --cyan-subtle: rgba(56, 189, 248, 0.12);
+  --cyan-border: rgba(56, 189, 248, 0.35);
+  
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-code: #00ff9d;
+  --border-subtle: rgba(148, 163, 184, 0.18);
+  --border-strong: rgba(148, 163, 184, 0.35);
+
+  /* Phase 2 Warning / Anomaly Accents */
+  --amber-primary: #f59e0b;
+  --amber-glow: #fbbf24;
+  --amber-dim: #b45309;
+  --amber-subtle: rgba(245, 158, 11, 0.18);
+  --amber-border: rgba(245, 158, 11, 0.5);
+
+  /* Phase 3 Red / Entropy Accents */
+  --red-primary: #ef4444;
+  --red-dim: #991b1b;
+  --red-subtle: rgba(239, 68, 68, 0.18);
+  --red-border: rgba(239, 68, 68, 0.5);
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  --font-tech: 'Share Tech Mono', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Layout */
+  --header-height: 54px;
+  --footer-height: 48px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  cursor: crosshair;
+}
+
+/* App Viewport Container */
+#app-root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #0d131f 0%, #040608 90%);
+}
+
+/* CRT Scanlines and Atmospheric Grain */
+.crt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.22) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.02),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.02)
+  );
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0.75;
+}
+
+.crt-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.88);
+}
+
+/* Generic Forensic Button & Input System */
+button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--bg-surface-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-strong);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+
+button:hover {
+  background: var(--green-subtle);
+  border-color: var(--green-glow);
+  color: var(--green-glow);
+  box-shadow: 0 0 14px rgba(0, 255, 157, 0.25);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button.primary {
+  background: var(--green-subtle);
+  border-color: var(--green-primary);
+  color: var(--green-glow);
+}
+
+button.primary:hover {
+  background: var(--green-primary);
+  color: #040608;
+  box-shadow: 0 0 18px rgba(0, 255, 157, 0.45);
+}
+
+button.warning {
+  border-color: var(--amber-primary);
+  color: var(--amber-glow);
+  background: var(--amber-subtle);
+}
+
+button.warning:hover {
+  background: var(--amber-primary);
+  color: #040608;
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+}
+
+button.danger {
+  border-color: var(--red-primary);
+  color: var(--red-primary);
+  background: var(--red-subtle);
+}
+
+button.danger:hover {
+  background: var(--red-primary);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.45);
+}
+
+button:disabled, button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: var(--border-subtle);
+}
+
+/* Input Fields */
+input[type="text"] {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background: #05080e;
+  border: 1px solid var(--green-border);
+  color: var(--green-glow);
+  padding: 10px 14px;
+  outline: none;
+  width: 100%;
+  transition: all var(--transition-fast);
+}
+
+input[type="text"]:focus {
+  border-color: var(--green-glow);
+  box-shadow: 0 0 14px rgba(0, 255, 157, 0.25);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #05080e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a2332;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green-dim);
+}
+
+/* Status Badges */
+.status-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.status-badge.nominal {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--green-glow);
+  border: 1px solid var(--green-border);
+}
+
+.status-badge.degraded {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--amber-glow);
+  border: 1px solid var(--amber-border);
+}
+
+.status-badge.restricted, .status-badge.locked {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--red-primary);
+  border: 1px solid var(--red-border);
+}
+
+.status-badge.offline {
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--text-dim);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Radio Comms HUD Toast Alert */
+.comms-toast-alert {
+  position: absolute;
+  top: 70px;
+  right: 28px;
+  z-index: 1200;
+  background: rgba(12, 18, 28, 0.95);
+  border: 1px solid var(--amber-border);
+  border-left: 4px solid var(--amber-glow);
+  padding: 14px 18px;
+  min-width: 320px;
+  max-width: 440px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.2);
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.comms-toast-sender {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--amber-glow);
+  letter-spacing: 0.12em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comms-toast-body {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-top: 6px;
+}
+
+/* Blinking & Pulse */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px currentColor); }
+}
+
+.pulse {
+  animation: pulse-subtle 2.5s ease-in-out infinite;
+}

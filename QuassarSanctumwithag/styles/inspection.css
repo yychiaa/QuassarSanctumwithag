@@ -1,0 +1,263 @@
+/* QUASSAR SANCTUM - Forensic Inspection Overlay Panel */
+
+.inspection-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 6, 9, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.inspection-window {
+  width: 100%;
+  max-width: 1060px;
+  max-height: 85vh;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--green-border);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 255, 157, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Inspection Header */
+.inspection-header {
+  height: 48px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.inspection-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inspection-mode-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--green-subtle);
+  color: var(--green-glow);
+  border: 1px solid var(--green-border);
+  padding: 2px 8px;
+}
+
+.inspection-object-id {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+
+.inspection-close-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 4px 10px;
+}
+
+.inspection-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--red-primary);
+  color: #fff;
+}
+
+/* Inspection Body Layout (2 Columns) */
+.inspection-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  overflow: hidden;
+  background: #080c12;
+}
+
+/* Left Visual Column */
+.inspection-visual-col {
+  border-right: 1px solid var(--border-strong);
+  background: #05080c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.inspection-image-viewport {
+  width: 100%;
+  height: 280px;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inspection-macro-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1);
+}
+
+.inspection-image-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 157, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 157, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.inspection-image-reticle-cross {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--green-glow);
+  pointer-events: none;
+}
+
+.inspection-visual-telemetry {
+  padding: 16px 20px;
+  flex: 1;
+  overflow-y: auto;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 6px;
+}
+
+.telemetry-label {
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.telemetry-val {
+  color: var(--cyan-primary);
+  font-weight: 600;
+}
+
+/* Right Content Column */
+.inspection-content-col {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px 30px;
+  gap: 20px;
+}
+
+.inspection-section-header {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--green-glow);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.inspection-section-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.inspection-observation-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-main);
+}
+
+.inspection-sysdata-box {
+  background: #06090e;
+  border: 1px solid var(--border-strong);
+  padding: 14px 18px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  border-left: 3px solid var(--cyan-primary);
+}
+
+.sysdata-entry {
+  margin-bottom: 8px;
+}
+.sysdata-entry:last-child {
+  margin-bottom: 0;
+}
+
+/* Interactive Mini-Action: Frequency Spectrum Analyzer / Decryptor */
+.inspection-action-box {
+  background: rgba(16, 22, 32, 0.7);
+  border: 1px solid var(--green-border);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spectrum-canvas {
+  width: 100%;
+  height: 70px;
+  background: #020406;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Inspection Footer Action Bar */
+.inspection-footer {
+  height: 60px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.inspection-discovery-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--amber-glow);
+}
+
+.discovery-icon {
+  font-size: 14px;
+}
+
+.inspection-btn-group {
+  display: flex;
+  gap: 12px;
+}
